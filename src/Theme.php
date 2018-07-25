@@ -243,16 +243,18 @@ class Theme implements ThemeContract
      *
      * @return Collection
      */
-    public function info($property = null, $value = null) {
+    public function info($property = null, $value = null)
+    {
         $info = $this->manifest;
 
         $info->setThemePath($this->getThemePath());
 
-        if($value && $property){
+        if ($value && $property) {
             $info->setProperty($property, $value);
             return $value;
-        } else {
-            if($property){
+        }
+        else {
+            if ($property) {
                 return $info->getProperty($property);
             }
             return $info->getJsonContents();
@@ -267,7 +269,7 @@ class Theme implements ThemeContract
     public function all()
     {
         $themes = [];
-
+        $path   = base_path($this->getConfig('themeDir'));
         if ($this->files->exists($path)) {
             $scannedThemes = $this->files->directories($path);
             foreach ($scannedThemes as $theme) {

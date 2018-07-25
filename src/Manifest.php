@@ -93,7 +93,8 @@ class Manifest
 	 */
 	public function getProperty($key, $default = null)
 	{
-		return array_get($this->getJsonContents(), $key, $default);
+        $this->setThemePath(base_path('public/themes/'.$key));
+        return $this->getJsonContents();
 	}
 
 	/**
