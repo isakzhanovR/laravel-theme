@@ -280,6 +280,31 @@ class Theme implements ThemeContract
     }
 
     /**
+     * @param null $theme
+     *
+     * @return files collection where key is directory and values is files
+     */
+    public function getThemeFiles($theme = null)
+    {
+        if ($theme != false) {
+            $this->theme = $theme;
+        }
+        // Is theme ready?
+        if (!$this->exists($theme)) {
+            throw new UnknownThemeException("Theme [$theme] not found.");
+        }
+        $theme_files = collect();
+
+        $theme_directories = $this->files->directories(base_path($this->path()));
+        foreach ($theme_directories as $theme_directory){
+            $theme_files->put(basename($theme_directory), $this->files->files($theme_directory));
+        }
+        $theme_files->put('root',$this->files->files(base_path($this->path())));
+
+        return $theme_files;
+    }
+
+    /**
      * Get current theme name.
      *
      * @return string
