@@ -63,8 +63,6 @@ class ThemeServiceProvider extends ServiceProvider {
 		// Merge config to allow user overwrite.
 		$this->mergeConfigFrom($configPath, 'theme');
 
-		$app = $this->app;
-
 		// Register providers:
 		$this->registerAsset();
 		$this->registerTheme();
@@ -143,7 +141,7 @@ class ThemeServiceProvider extends ServiceProvider {
 	{
 		$this->app->singleton('widget', function($app)
 		{
-			return new Widget($app['view']);
+            return new Widget($app['theme'], $app['config'], $app['view']);
 		});
 	}
 
